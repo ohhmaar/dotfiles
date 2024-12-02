@@ -1,0 +1,5 @@
+- hosts: localhost
+  become: true
+  roles:
+    - role: common # Update macOS, set basic preferences
+    - role: software # Install apps and tools
