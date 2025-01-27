@@ -9,9 +9,10 @@ return {
 				},
 				ensure_installed = {
 					"lua",
-					"typescript",
-					"tsx",
 					"go",
+          "gomod",
+          "gosum",
+          "gowork"
 				},
 			})
 		end,

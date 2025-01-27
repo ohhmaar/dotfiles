@@ -35,5 +35,6 @@ return {
 		{ "<C-p>", "<cmd>Telescope git_files<cr>", desc = "Find files" },
 		{ "<leader>fa", "<cmd>Telescope find_files<cr>", desc = "Find all files" },
 		{ "<leader>fi", "<cmd>Telescope live_grep<cr>", desc = "Find in files" },
+    { "<leader>fe", "<cmd>Oil<cr>", desc = "[F]ilesystem [E]xplorer"},
 	},
 }

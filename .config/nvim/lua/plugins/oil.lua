@@ -1,15 +1,11 @@
 return {
   {
-  'stevearc/oil.nvim',
-  dependencies = { { "echasnovski/mini.icons", opts = {} } },
-  config = function()
-      local detail = false
-      require("oil").setup({
-        default_file_explorer = true,
-        view_options = {
-          show_hidden = true,
-        }
-      })
+    'stevearc/oil.nvim',
+    ---@module 'oil'
+    ---@type oil.SetupOpts
+    opts = {},
+    -- Optional dependencies
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    -- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if prefer nvim-web-devicons
+  }
 }
-}
-

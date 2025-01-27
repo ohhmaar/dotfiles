@@ -22,9 +22,11 @@ require("config.set")
 require("lazy").setup({
 	spec = {
 		{ import = "plugins" },
+		{"kcl-lang/kcl.nvim"},
 	},
 	checker = {
 		enabled = true,
 		notify = false,
 	},
 })
+require('lualine').setup()
