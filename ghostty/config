@@ -1,0 +1,25 @@
+# font-family = JetBrains Mono Nerd Font
+font-family = "Hasklug Nerd Font Mono Med"
+font-size = 15
+term=xterm-256color
+macos-titlebar-style = tabs
+window-title-font-family = "Hasklug Nerd Font Mono Med"
+window-width = 100000
+window-height = 100000
+
+background = #1a1b26
+foreground = #c0caf5
+
+theme = Ayu
+
+# Cursor:
+cursor-color = F8F8F2
+cursor-style-blink = false
+cursor-text = 000000
+cursor-style = block
+
+selection-background = #283457
+selection-foreground = #c0caf5
+#background-opacity = 0.95
+macos-window-shadow = false
+mouse-hide-while-typing = true
