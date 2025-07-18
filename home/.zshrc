@@ -26,9 +26,6 @@ zstyle ':zim' 'disable-version-check' 'true'
 source ${ZIM_HOME}/init.zsh
 
 
-
-
-
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 
@@ -78,10 +75,13 @@ export GOROOT="/opt/homebrew/Cellar/go/1.23.5/libexec"
 export GOPATH="$HOME/Documents/go" 
 export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export HOMEBREW_NO_AUTO_UPDATE=1
+export PATH="$HOME/.bun/bin:$PATH"
 
 alias cat='bat'
-#source /opt/homebrew/share/powerlevel10k/powerlevel10k.zsh-theme
 
 . "$HOME/.atuin/bin/env"
 
 eval "$(atuin init zsh)"
+
+# bun completions
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
