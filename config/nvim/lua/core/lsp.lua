@@ -1,6 +1,8 @@
 vim.lsp.enable({
     "gopls",
-    "lua_ls"
+    "lua_ls",
+    "ts_ls",
+    "terraformls"
 })
 
 vim.diagnostic.config({

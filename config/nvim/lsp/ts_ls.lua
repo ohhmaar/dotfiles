@@ -1,5 +1,3 @@
-local blink = require("blink.cmp")
-
 return {
     cmd = { "typescript-language-server", "--stdio" },
     filetypes = {
@@ -9,12 +7,10 @@ return {
         "typescript",
         "typescriptreact",
         "typescript.tsx",
-        -- "vue"
     },
     root_markers = { "tsconfig.json", "jsconfig.json", "package.json", ".git" },
     settings = {
         typescript = {
-            -- Remove tsdk setting to allow auto-detection
             tsserver = {
                 useSyntaxServer = false,
             },
@@ -30,13 +26,27 @@ return {
             },
         },
         javascript = {
-            -- Remove tsdk setting to allow auto-detection
+            inlayHints = {
+                includeInlayParameterNameHints = 'all',
+                includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+                includeInlayFunctionParameterTypeHints = true,
+                includeInlayVariableTypeHints = true,
+                includeInlayPropertyDeclarationTypeHints = true,
+                includeInlayFunctionLikeReturnTypeHints = true,
+            },
         },
     },
-    capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        blink.get_lsp_capabilities()
-    ),
+    capabilities = function()
+        local has_blink, blink = pcall(require, "blink.cmp")
+        if has_blink then
+            return vim.tbl_deep_extend(
+                "force",
+                {},
+                vim.lsp.protocol.make_client_capabilities(),
+                blink.get_lsp_capabilities()
+            )
+        else
+            return vim.lsp.protocol.make_client_capabilities()
+        end
+    end,
 }
