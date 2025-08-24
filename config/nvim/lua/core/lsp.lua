@@ -1,3 +1,12 @@
+-- Define capabilities for LSP clients
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+
+-- Configure capabilities for all servers
+vim.lsp.config('*', {
+    capabilities = capabilities
+})
+
+-- Enable LSP servers
 vim.lsp.enable({
     "gopls",
     "lua_ls",
@@ -6,8 +15,7 @@ vim.lsp.enable({
 })
 
 vim.diagnostic.config({
-    virtual_lines = true,
-    -- virtual_text = true,
+    virtual_text = true,
     underline = true,
     update_in_insert = false,
     severity_sort = true,

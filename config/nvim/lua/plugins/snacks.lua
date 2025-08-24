@@ -6,7 +6,7 @@ return {
   opts = {
     bigfile = { enabled = true },
     dashboard = { enabled = true },
-    explorer = { enabled = true },
+    explorer = { enabled = true, hidden = true },
     indent = { enabled = false },
     input = { enabled = true },
     notifier = {
@@ -17,6 +17,7 @@ return {
       enabled = true,
       sources = {
         files = { hidden = true },
+        explorer = { hidden = true },
       },
     },
     quickfile = { enabled = true },

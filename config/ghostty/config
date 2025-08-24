@@ -1,50 +1,112 @@
-term=xterm-256color
-window-title-font-family = JetBrains Mono Nerd Font
+# =============================================================================
+# Ghostty Terminal Configuration
+# =============================================================================
 
-# Ghostty theme
+# Terminal Type
+# Sets the TERM environment variable for compatibility
+term = xterm-256color
+
+# =============================================================================
+# Theme and Appearance
+# =============================================================================
+
+# Color theme - Catppuccin Macchiato for consistent aesthetics
 theme = catppuccin-macchiato
 
-# Shell integrations
-shell-integration = zsh
-quit-after-last-window-closed = true
+# Background transparency - fully opaque for better readability
+background-opacity = 1.0
 
-# Font family
+# =============================================================================
+# Font Configuration
+# =============================================================================
+
+# Primary font family with Nerd Font support for icons
 font-family = JetBrains Mono Nerd Font
 font-style = Regular
 font-style-italic = Regular Italic
 font-style-bold = Bold
 font-style-bold-italic = Bold Italic
 
-# Font size
+# Font rendering - thicken for better visibility
+font-thicken = true
 font-size = 18
 
-# Opacity of split windows
-unfocused-split-opacity = 0.97  
+# =============================================================================
+# Window and Display Settings
+# =============================================================================
 
-# Set the background-opacity to be fully opaque
-background-opacity = 1.0
+# Window dimensions - maximized for full screen experience
+window-width = 100000
+window-height = 100000
 
-# Cursor style
+# Window padding for visual breathing room
+window-padding-x = 10
+window-padding-y = 10
+
+# Window title configuration
+title = ghostty
+
+# =============================================================================
+# macOS Specific Settings
+# =============================================================================
+
+# Use Option key as Alt for better terminal compatibility
+macos-option-as-alt = true
+
+# Hide proxy icon in titlebar for cleaner look
+macos-titlebar-proxy-icon = hidden
+
+# Enable tabs in titlebar
+macos-titlebar-style = tabs
+
+# =============================================================================
+# Shell Integration
+# =============================================================================
+
+# Enable zsh shell integration for enhanced features
+shell-integration = zsh
+
+# Disable cursor integration to avoid conflicts
+shell-integration-features = no-cursor
+
+# Close Ghostty when last window closes
+quit-after-last-window-closed = true
+
+# =============================================================================
+# History and Scrollback
+# =============================================================================
+
+# Scrollback buffer size - 10k lines for adequate history
+scrollback-limit = 10000
+
+# =============================================================================
+# Cursor and Mouse Behavior
+# =============================================================================
+
+# Enable cursor blinking for visibility
 cursor-style-blink = true
 
-# Clipboard settings
+# Hide mouse cursor while typing to reduce distractions
+mouse-hide-while-typing = true
+
+# Disable shift+mouse capture for better text selection
+mouse-shift-capture = false
+
+# =============================================================================
+# Clipboard Integration
+# =============================================================================
+
+# Allow clipboard read/write for seamless copy-paste
 clipboard-read = allow
 clipboard-write = allow
 
-# macos options
-macos-option-as-alt = true
-macos-titlebar-proxy-icon = hidden
+# Copy selected text to clipboard automatically
+copy-on-select = clipboard
 
-# Always show ghostty as the title
-title = ghostty 
+# =============================================================================
+# Window Behavior
+# =============================================================================
 
-# Window settings
-window-width = 90
-window-height = 30
-window-colorspace = display-p3
-window-padding-color = background
-window-padding-balance = true
-window-padding-x = 0
-window-padding-y = 0
-
+# Disable confirmation dialog when closing
+confirm-close-surface = false
 
