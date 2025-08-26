@@ -10,8 +10,8 @@ term = xterm-256color
 # Theme and Appearance
 # =============================================================================
 
-# Color theme - Catppuccin Macchiato for consistent aesthetics
-theme = catppuccin-macchiato
+# Color theme - Gruvbox Dark Hard for consistent aesthetics
+theme = gruvbox-material
 
 # Background transparency - fully opaque for better readability
 background-opacity = 1.0

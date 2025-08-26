@@ -19,7 +19,7 @@ HOME_FILES=(
     ".zimrc"
     ".tmux.conf"
     ".bashrc"
-    ".p10k.zsh"
+    "starship.toml"
 )
 
 # Config directory dotfiles

@@ -1,6 +1,4 @@
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
- source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Removed Powerlevel10k instant prompt - now using Starship
 
 ZIM_HOME=${ZDOTDIR:-${HOME}}/.zim
 # Download zimfw plugin manager if missing.
@@ -22,11 +20,14 @@ ZSH_AUTOSUGGEST_STRATEGY=(completion history)
 zstyle ':zim:input' double-dot-expand yes
 zstyle ':zim' 'disable-version-check' 'true'
 
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#665c54"  # darker gray with bold
 # Initialize modules.
 source ${ZIM_HOME}/init.zsh
 
 
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# Initialize Starship prompt
+export STARSHIP_CONFIG="$HOME/starship.toml"
+eval "$(starship init zsh)"
 
 
 alias reload-zsh="exec zsh"
@@ -47,29 +48,24 @@ setopt HIST_SAVE_NO_DUPS      # Dont write duplicate entries in the history file
 setopt SHARE_HISTORY          # Share history between all sessions.
 unsetopt HIST_VERIFY          # Execute commands using history (e.g.: using !$) immediately
 
-# ---- FZF -----
-
-# Set up fzf key bindings and fuzzy completion
-eval "$(fzf --zsh)"
-
-# --- setup fzf theme ---
-fg="#CBE0F0"
-bg="#011628"
-bg_highlight="#143652"
-purple="#B388FF"
-blue="#06BCE4"
-cyan="#2CF9ED"
-
-eval "$(direnv hook zsh)"   # For Zsh
-
+# --- setup fzf theme (gruvbox-material) ---
+fg="#d4be98"
+bg="#1d2021"
+bg_highlight="#3c3836"
+purple="#d3869b"
+blue="#7daea3"
+cyan="#89b482"
+green="#a9b665"
+yellow="#d8a657"
+orange="#e78a4e"
+red="#ea6962"
 
 export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 alias vim='nvim'
-
-eval "$(direnv hook zsh)"
+alias oc='opencode '
 
 export GOROOT="/opt/homebrew/Cellar/go/1.23.5/libexec"
 export GOPATH="$HOME/Documents/go" 
@@ -81,7 +77,7 @@ alias cat='bat'
 
 . "$HOME/.atuin/bin/env"
 
-eval "$(atuin init zsh)"
-
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+
+eval "$(fzf --zsh; atuin init zsh)"

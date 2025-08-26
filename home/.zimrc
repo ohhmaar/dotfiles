@@ -7,14 +7,8 @@ zmodule utility
 
 # Prompt
 
-# Powerlevel10k theme
-zmodule romkatv/powerlevel10k --use degit
-# Exposes to prompts how long the last command took to execute, used by asciiship.
-zmodule duration-info
-# Exposes git repository status information to prompts, used by asciiship.
-zmodule git-info
-# A heavily reduced, ASCII-only version of the Spaceship and Starship prompts.
-zmodule asciiship
+# Starship prompt (cross-shell prompt)
+# Note: Starship is initialized in .zshrc via eval "$(starship init zsh)"
 
 
 # Additional completion definitions for Zsh.
