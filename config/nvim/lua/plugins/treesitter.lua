@@ -57,6 +57,9 @@ return {
                         node_decremental = "_",
                     },
                 },
+                autopairs = {
+                    enable = true,
+                },
                 textobjects = {
                     select = {
                         enable = true,

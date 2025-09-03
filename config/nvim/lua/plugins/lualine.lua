@@ -4,7 +4,7 @@ return {
   config = function()
     require("lualine").setup({
       options = {
-        theme = "auto",
+        theme = "gruvbox_dark",
         component_separators = { left = "", right = "" },
         section_separators = { left = "", right = "" },
         disabled_filetypes = {
@@ -31,7 +31,7 @@ return {
             symbols = { error = " ", warn = " ", info = " ", hint = " " },
           }
         },
-        lualine_c = { 
+        lualine_c = {
           {
             "filename",
             file_status = true,

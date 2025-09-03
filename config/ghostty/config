@@ -1,112 +1,39 @@
-# =============================================================================
-# Ghostty Terminal Configuration
-# =============================================================================
-
-# Terminal Type
-# Sets the TERM environment variable for compatibility
 term = xterm-256color
-
-# =============================================================================
-# Theme and Appearance
-# =============================================================================
-
-# Color theme - Gruvbox Dark Hard for consistent aesthetics
-theme = gruvbox-material
-
-# Background transparency - fully opaque for better readability
+theme = GruvboxDarkHard
 background-opacity = 1.0
-
-# =============================================================================
-# Font Configuration
-# =============================================================================
-
-# Primary font family with Nerd Font support for icons
-font-family = JetBrains Mono Nerd Font
+font-family = Lilex Nerd Font
 font-style = Regular
 font-style-italic = Regular Italic
 font-style-bold = Bold
 font-style-bold-italic = Bold Italic
-
-# Font rendering - thicken for better visibility
 font-thicken = true
-font-size = 18
-
-# =============================================================================
-# Window and Display Settings
-# =============================================================================
-
-# Window dimensions - maximized for full screen experience
+font-size = 14
 window-width = 100000
 window-height = 100000
-
-# Window padding for visual breathing room
 window-padding-x = 10
-window-padding-y = 10
-
-# Window title configuration
+window-padding-y = 1
 title = ghostty
-
-# =============================================================================
-# macOS Specific Settings
-# =============================================================================
-
-# Use Option key as Alt for better terminal compatibility
 macos-option-as-alt = true
-
-# Hide proxy icon in titlebar for cleaner look
 macos-titlebar-proxy-icon = hidden
-
-# Enable tabs in titlebar
 macos-titlebar-style = tabs
-
-# =============================================================================
-# Shell Integration
-# =============================================================================
-
-# Enable zsh shell integration for enhanced features
 shell-integration = zsh
-
-# Disable cursor integration to avoid conflicts
 shell-integration-features = no-cursor
-
-# Close Ghostty when last window closes
 quit-after-last-window-closed = true
-
-# =============================================================================
-# History and Scrollback
-# =============================================================================
-
-# Scrollback buffer size - 10k lines for adequate history
 scrollback-limit = 10000
-
-# =============================================================================
-# Cursor and Mouse Behavior
-# =============================================================================
-
-# Enable cursor blinking for visibility
-cursor-style-blink = true
-
-# Hide mouse cursor while typing to reduce distractions
+cursor-style-blink = false
+adjust-cursor-thickness = 300%
+cursor-style = block
 mouse-hide-while-typing = true
-
-# Disable shift+mouse capture for better text selection
 mouse-shift-capture = false
-
-# =============================================================================
-# Clipboard Integration
-# =============================================================================
-
-# Allow clipboard read/write for seamless copy-paste
 clipboard-read = allow
 clipboard-write = allow
-
-# Copy selected text to clipboard automatically
 copy-on-select = clipboard
-
-# =============================================================================
-# Window Behavior
-# =============================================================================
-
-# Disable confirmation dialog when closing
 confirm-close-surface = false
+resize-overlay = never
 
+# The opacity level (opposite of transparency) of an unfocused split.
+# Unfocused splits by default are slightly faded out to make it easier to see
+# which split is focused. To disable this feature, set this value to 1.
+unfocused-split-opacity = 0.80
+unfocused-split-fill = #a33503
+split-divider-color = #FF4F00
