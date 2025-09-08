@@ -3,7 +3,7 @@ return {
   event = "VeryLazy",
   opts = {
     preset = "helix",
-    delay = 300,
+    delay = 1000,
     icons = {
       mappings = vim.g.have_nerd_font,
       keys = {},
