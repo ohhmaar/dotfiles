@@ -9,6 +9,7 @@ return {
     explorer = { enabled = true },
     indent = { enabled = false },
     input = { enabled = true },
+    lazygit = { enabled = true },
     notifier = {
       enabled = true,
       timeout = 3000,
@@ -61,6 +62,9 @@ return {
     { "<leader>gS",      function() Snacks.picker.git_stash() end,                               desc = "Git Stash" },
     { "<leader>gd",      function() Snacks.picker.git_diff() end,                                desc = "Git Diff (Hunks)" },
     { "<leader>gf",      function() Snacks.picker.git_log_file() end,                            desc = "Git Log File" },
+    { "<leader>gg",      function() Snacks.lazygit() end,                                     desc = "Lazygit" },
+    { "<leader>gG",      function() Snacks.lazygit.log() end,                                 desc = "Lazygit Log" },
+    { "<leader>gF",      function() Snacks.lazygit.log_file() end,                            desc = "Lazygit Log File" },
     -- Grep
     { "<leader>sb",      function() Snacks.picker.lines() end,                                   desc = "Buffer Lines" },
     { "<leader>sB",      function() Snacks.picker.grep_buffers() end,                            desc = "Grep Open Buffers" },

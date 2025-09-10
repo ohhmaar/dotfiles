@@ -50,6 +50,9 @@ return {
             -- Other (system tools)
             rust = { "rustfmt" }, -- comes with Rust installation
 
+            -- SQL
+            sql = { "pg_format" },
+
             -- Additional file types (uncomment as needed)
             -- markdown = { "markdownlint" },
             -- yaml = { "yamllint" },
