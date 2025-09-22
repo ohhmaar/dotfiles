@@ -3,7 +3,8 @@ return {
         "nvim-treesitter/nvim-treesitter",
         version = false,
         build = ":TSUpdate",
-        event = { "BufReadPost", "BufNewFile" },
+        lazy = vim.fn.argc(-1) == 0,
+        event = { "BufReadPre", "BufNewFile", "VeryLazy" },
         dependencies = {
             "nvim-treesitter/nvim-treesitter-textobjects",
         },

@@ -6,6 +6,7 @@ return {
             "rafamadriz/friendly-snippets",
         },
         version = "*",
+        event = { "InsertEnter", "CmdlineEnter" },
         config = function()
             require("blink.cmp").setup({
                 snippets = { preset = "luasnip" },
