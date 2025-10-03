@@ -66,18 +66,18 @@ export NVM_DIR="$HOME/.nvm"
 
 alias vim='nvim'
 alias oc='opencode '
-
-export GOROOT="/opt/homebrew/Cellar/go/1.23.5/libexec"
+export GOROOT="/opt/homebrew/opt/go@1.24/libexec"
 export GOPATH="$HOME/Documents/go" 
 export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export PATH="$HOME/.bun/bin:$PATH"
 
 alias cat='bat'
+alias gc='git checkout'
 
 . "$HOME/.atuin/bin/env"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-eval "$(fzf --zsh; atuin init zsh)"
+eval "$(fzf --zsh; atuin init zsh; zoxide init zsh)"

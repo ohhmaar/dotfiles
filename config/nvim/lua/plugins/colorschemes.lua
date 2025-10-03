@@ -1,10 +1,24 @@
 return {
-  "ellisonleao/gruvbox.nvim",
+  "neanias/everforest-nvim",
+  version = false,
+  lazy = false,
   priority = 1000, -- make sure to load this before all the other start plugins
+  -- Optional; default configuration will be used if setup isn't called.
   config = function()
-    require("gruvbox").setup({
-      contrast = "hard"
+    require("everforest").setup({
+      -- Your config here
+      background = "hard",
     })
-    vim.cmd([[colorscheme gruvbox]])
+    vim.cmd([[colorscheme everforest]])
   end,
 }
+-- return {
+--   "ellisonleao/gruvbox.nvim",
+--   priority = 1000, -- make sure to load this before all the other start plugins
+--   config = function()
+--     require("gruvbox").setup({
+--       contrast = "hard"
+--     })
+--     vim.cmd([[colorscheme gruvbox]])
+--   end,
+-- }
