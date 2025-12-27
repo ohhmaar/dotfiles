@@ -1,13 +1,13 @@
 term = xterm-256color
-theme = Everforest Dark   Hard
+theme = Catppuccin Mocha 
 background-opacity = 1.0
-font-family = "FiraCode Nerd Font Mono"
-font-size = 14
+font-family = "JetBrains Mono NL"
+font-size = 16
 window-width = 100000
 window-height = 100000
 window-padding-x = 10
 window-padding-y = 1
-title = ghostty
+title = " "
 macos-option-as-alt = true
 macos-titlebar-proxy-icon = hidden
 macos-titlebar-style = tabs
