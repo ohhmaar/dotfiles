@@ -21,9 +21,14 @@ vim.o.autoread = true
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
+-- Exit on jj and jk
+vim.keymap.set("i", "jj", "<ESC>")
+vim.keymap.set("i", "jk", "<ESC>")
+
 vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
 	{ src = "https://github.com/williamboman/mason.nvim" },
+	{ src = "https://github.com/neovim/nvim-lspconfig" },
 	{ src = "https://github.com/L3MON4D3/LuaSnip" },
 	{ src = "https://github.com/catppuccin/nvim" },
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.8.0" },
@@ -65,7 +70,16 @@ local ensure_installed = {
 	"css",
 }
 
-require("nvim-treesitter").install(ensure_installed)
+require("nvim-treesitter.config").setup({
+	ensure_installed = ensure_installed,
+	auto_install = true,
+
+	highlight = {
+		enable = true,
+		additional_vim_regex_highlighting = false,
+	},
+})
+-- require("nvim-treesitter").install(ensure_installed)
 
 local filetypes = vim.iter(ensure_installed):map(vim.treesitter.language.get_filetypes):flatten():totable()
 
@@ -101,8 +115,9 @@ vim.api.nvim_create_autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, { buffer = args.buf, desc = "Rename symbol" })
 
 		-- Diagnostics (native vim.diagnostic)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { buffer = args.buf, desc = "Previous diagnostic" })
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { buffer = args.buf, desc = "Next diagnostic" })
+		vim.keymap.set("n", "<M-j>", "<cmd>cnext<CR>", { desc = "Quickfix next" })
+		vim.keymap.set("n", "<M-k>", "<cmd>cprevious<CR>", { desc = "Quickfix previous" })
+
 		vim.keymap.set("n", "gl", vim.diagnostic.open_float, { buffer = args.buf, desc = "Show diagnostic" })
 		vim.keymap.set("n", "<leader>dl", vim.diagnostic.setloclist, { buffer = args.buf, desc = "Diagnostic list" })
 		vim.keymap.set(
@@ -111,10 +126,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.diagnostic.setqflist,
 			{ buffer = args.buf, desc = "Workspace diagnostics" }
 		)
-		vim.keymap.set("n", "<leader>cc", ":cclose<CR>", { desc = "Close quickfix" })
+		vim.keymap.set("n", "<leader>cc", "<cmd>cclose<CR>", { desc = "Close quickfix" })
 		vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = args.buf, desc = "Code Action" })
 		vim.keymap.set("v", "<leader>ca", vim.lsp.buf.code_action, { buffer = args.buf, desc = "Code Action" })
 		local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
+		client.server_capabilities.semanticTokensProvider = nil
 		if client:supports_method("textDocument/completion") then
 			-- Optional: trigger autocompletion on EVERY keypress. May be slow!
 			local chars = {}
@@ -228,7 +244,6 @@ require("luasnip").setup({ enable_autosnippets = true })
 -- INFO: mini
 require("mini.notify").setup()
 
-vim.ui.select = require("mini.pick").ui_select
 local miniclue = require("mini.clue")
 miniclue.setup({
 	triggers = {
@@ -275,12 +290,22 @@ miniclue.setup({
 })
 
 local pick = require("mini.pick")
+local choose_all = function()
+	local mappings = pick.get_picker_opts().mappings
+	vim.api.nvim_input(mappings.mark_all .. mappings.choose_marked)
+end
+
+-- vim.ui.select = require("mini.pick").ui_select
+require("mini.pick").setup({
+	mappings = {
+		choose_all = { char = "<C-q>", func = choose_all },
+	},
+})
 
 -- Find files (respects .gitignore)
 vim.keymap.set("n", "<leader>ff", pick.builtin.files, { desc = "Find files" })
 
 -- Grep/search in files
-vim.keymap.set("n", "<leader>fg", pick.builtin.grep_live, { desc = "Grep (live)" })
 vim.keymap.set("n", "<leader>/", pick.builtin.grep_live, { desc = "Grep (live)" })
 
 -- Recent files
@@ -304,7 +329,7 @@ vim.keymap.set("n", "<leader>fw", function()
 end, { desc = "Find word under cursor" })
 
 -- Git files (if in a git repo)
-vim.keymap.set("n", "<leader>gf", function()
+vim.keymap.set("n", "<leader>fg", function()
 	pick.builtin.files({ tool = "git" })
 end, { desc = "Find git files" })
 
@@ -318,16 +343,24 @@ require("mini.statusline").setup({
 require("mini.ai").setup({ n_lines = 500 })
 require("mini.pairs").setup()
 require("mini.surround").setup()
+
 -- INFO: catppuccin
 
 require("catppuccin").setup({
 	flavour = "mocha", -- latte, frappe, macchiato, mocha
 	transparent_background = false,
 	integrations = {
+		blink_cmp = {
+			style = "bordered",
+		},
 		cmp = true,
 		gitsigns = true,
 		treesitter = true,
 		mason = true,
+		mini = {
+			enabled = true,
+			indentscope_color = "mocha",
+		},
 	},
 })
 
