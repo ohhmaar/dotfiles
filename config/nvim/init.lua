@@ -1,6 +1,6 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 vim.opt.winborder = "rounded"
 vim.o.number = true
@@ -18,12 +18,39 @@ vim.o.incsearch = true
 vim.o.signcolumn = "yes"
 vim.o.clipboard = "unnamedplus"
 vim.o.autoread = true
+vim.o.mouse = "a"
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 
 -- Exit on jj and jk
 vim.keymap.set("i", "jj", "<ESC>")
 vim.keymap.set("i", "jk", "<ESC>")
+
+-- Move selected lines up/down in visual mode
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selection down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selection up" })
+
+-- Lazygit floating terminal
+vim.keymap.set("n", "<leader>gg", function()
+	local buf = vim.api.nvim_create_buf(false, true)
+	local width = math.floor(vim.o.columns * 0.9)
+	local height = math.floor(vim.o.lines * 0.9)
+	local win = vim.api.nvim_open_win(buf, true, {
+		relative = "editor",
+		width = width,
+		height = height,
+		col = math.floor((vim.o.columns - width) / 2),
+		row = math.floor((vim.o.lines - height) / 2),
+		style = "minimal",
+		border = "rounded",
+	})
+	vim.fn.termopen("lazygit", {
+		on_exit = function()
+			vim.api.nvim_win_close(win, true)
+		end,
+	})
+	vim.cmd("startinsert")
+end, { desc = "Lazygit" })
 
 vim.pack.add({
 	{ src = "https://github.com/nvim-treesitter/nvim-treesitter", version = "main" },
@@ -37,6 +64,7 @@ vim.pack.add({
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-mini/mini.nvim" },
+	{ src = "https://github.com/fatih/vim-go" },
 })
 
 -- INFO: treesitter
@@ -82,7 +110,22 @@ require("nvim-treesitter.config").setup({
 -- require("nvim-treesitter").install(ensure_installed)
 
 local filetypes = vim.iter(ensure_installed):map(vim.treesitter.language.get_filetypes):flatten():totable()
+-- Highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.hl.on_yank()
+	end,
+})
 
+-- Return to last position
+vim.api.nvim_create_autocmd("BufReadPost", {
+	callback = function()
+		local mark = vim.api.nvim_buf_get_mark(0, '"')
+		if mark[1] > 0 and mark[1] <= vim.api.nvim_buf_line_count(0) then
+			pcall(vim.api.nvim_win_set_cursor, 0, mark)
+		end
+	end,
+})
 -- Enable treesitter for all installed languages
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = filetypes,
@@ -106,9 +149,8 @@ vim.api.nvim_create_autocmd("LspAttach", {
 	group = vim.api.nvim_create_augroup("my.lsp", {}),
 	callback = function(args)
 		vim.keymap.set("n", "gd", vim.lsp.buf.definition, { buffer = args.buf, desc = "Go to definition" })
-		vim.keymap.set("n", "gD", vim.lsp.buf.declaration, { buffer = args.buf, desc = "Go to declaration" })
-		vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = args.buf, desc = "References" })
 		vim.keymap.set("n", "gi", vim.lsp.buf.implementation, { buffer = args.buf, desc = "Go to implementation" })
+		vim.keymap.set("n", "gr", vim.lsp.buf.references, { buffer = args.buf, desc = "References" })
 		vim.keymap.set("n", "gt", vim.lsp.buf.type_definition, { buffer = args.buf, desc = "Type definition" })
 
 		-- Refactoring
@@ -141,6 +183,12 @@ vim.api.nvim_create_autocmd("LspAttach", {
 			vim.lsp.completion.enable(true, client.id, args.buf, { autotrigger = true })
 		end
 	end,
+})
+
+vim.diagnostic.config({
+	virtual_text = true,
+	underline = true,
+	-- float = { border = "rounded" },
 })
 vim.cmd([[set completeopt+=menuone,noselect,popup]])
 
@@ -314,7 +362,7 @@ vim.keymap.set("n", "<leader>fr", function()
 end, { desc = "Find recent files" })
 
 -- Buffers
-vim.keymap.set("n", "<leader>fb", pick.builtin.buffers, { desc = "Find buffers" })
+vim.keymap.set("n", "<leader><leader>", pick.builtin.buffers, { desc = "Find buffers" })
 
 -- Help tags
 vim.keymap.set("n", "<leader>fh", pick.builtin.help, { desc = "Find help" })
@@ -334,6 +382,7 @@ vim.keymap.set("n", "<leader>fg", function()
 end, { desc = "Find git files" })
 
 require("mini.statusline").setup({
+	set_vim_settings = false,
 	use_icons = vim.g.have_nerd_font,
 	section_location = function()
 		return "%2l:%-2v"
@@ -365,3 +414,15 @@ require("catppuccin").setup({
 })
 
 vim.cmd.colorscheme("catppuccin")
+
+-- INFO: vim-go
+-- Disable features handled by treesitter/LSP/conform
+vim.g.go_gopls_enabled = 0
+vim.g.go_code_completion_enabled = 0
+vim.g.go_fmt_autosave = 0
+vim.g.go_imports_autosave = 0
+vim.g.go_mod_fmt_autosave = 0
+vim.g.go_doc_keywordprg_enabled = 0
+vim.g.go_def_mapping_enabled = 0
+vim.g.go_textobj_enabled = 0
+vim.g.go_list_type = "quickfix"
