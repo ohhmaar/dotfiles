@@ -60,7 +60,6 @@ vim.pack.add({
 	{ src = "https://github.com/catppuccin/nvim" },
 	{ src = "https://github.com/saghen/blink.cmp", version = "v1.8.0" },
 	{ src = "https://github.com/stevearc/conform.nvim" },
-	{ src = "https://github.com/lewis6991/gitsigns.nvim" },
 	{ src = "https://github.com/nvim-tree/nvim-web-devicons" },
 	{ src = "https://github.com/stevearc/oil.nvim" },
 	{ src = "https://github.com/nvim-mini/mini.nvim" },
@@ -273,23 +272,19 @@ vim.keymap.set("n", "<leader>tf", function()
 	end
 end, { desc = "Toggle format-on-save" })
 
--- INFO: gitsigns
-
-require("gitsigns").setup({
-	signs = {
-		add = { text = "+" },
-		change = { text = "~" },
-		delete = { text = "_" },
-		topdelete = { text = "‾" },
-		changedelete = { text = "~" },
-	},
-})
-
 -- INFO: luasnip
 
 require("luasnip").setup({ enable_autosnippets = true })
 
 -- INFO: mini
+
+require("mini.git").setup()
+require("mini.diff").setup({
+	view = {
+		style = "sign",
+		signs = { add = "+", change = "~", delete = "_" },
+	},
+})
 require("mini.notify").setup()
 
 local miniclue = require("mini.clue")

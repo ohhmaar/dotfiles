@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+# Fuzzy project sessionizer
+# Searches project directories and creates/attaches to tmux sessions
+
+# Directories to search for projects (add more as needed)
+PROJECT_DIRS=(
+    "$HOME/Documents/projects"
+    "$HOME/dotfiles"
+)
+
+if [[ $# -eq 1 ]]; then
+    selected=$1
+else
+    # Find all directories, show only basename in fzf, then reconstruct full path
+    selected=$(fd -t d --max-depth 1 . "${PROJECT_DIRS[@]}" \
+        | while read -r dir; do printf '%s\t%s\n' "$(basename "$dir")" "$dir"; done \
+        | fzf --with-nth=1 --delimiter=$'\t' --layout=reverse \
+        | cut -f2)
+fi
+
+if [[ -z $selected ]]; then
+    exit 0
+fi
+
+# Create session name from directory (replace dots with underscores, tmux doesn't like dots)
+selected_name=$(basename "$selected" | tr . _)
+
+# Add to zoxide so it learns your project paths
+zoxide add "$selected"
+
+tmux_running=$(pgrep tmux)
+
+# If not in tmux and tmux is not running, start new session
+if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
+    tmux new-session -s "$selected_name" -c "$selected"
+    exit 0
+fi
+
+# If session doesn't exist, create it (detached)
+if ! tmux has-session -t="$selected_name" 2>/dev/null; then
+    tmux new-session -ds "$selected_name" -c "$selected"
+fi
+
+# Switch to or attach to the session
+if [[ -z $TMUX ]]; then
+    tmux attach-session -t "$selected_name"
+else
+    tmux switch-client -t "$selected_name"
+fi

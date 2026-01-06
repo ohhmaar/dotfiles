@@ -29,8 +29,8 @@ source ${ZIM_HOME}/init.zsh
 export STARSHIP_CONFIG="$HOME/starship.toml"
 eval "$(starship init zsh)"
 
-
 alias reload-zsh="exec zsh"
+# export PATH="$HOME/.local/share/mise/shims:$PATH"
 alias edit-zsh="nvim ~/.zshrc"
 
 # history setup
@@ -66,18 +66,23 @@ export NVM_DIR="$HOME/.nvm"
 
 alias vim='nvim'
 alias oc='opencode '
-export GOROOT="/opt/homebrew/opt/go@1.24/libexec"
+# export GOROOT="/opt/homebrew/opt/go@1.24/libexec"
 export GOPATH="$HOME/Documents/go" 
-export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+# export PATH="$GOPATH/bin:$GOROOT/bin:$PATH"
+export PATH="$HOME/.local/share/mise/shims:$GOPATH/bin:$PATH"
 export HOMEBREW_NO_AUTO_UPDATE=1
 export PATH="$HOME/.bun/bin:$PATH"
-
+export PATH="$HOME/.local/share/bob/nvim-bin/:$PATH"
 alias cat='bat'
 alias gc='git checkout'
-
+export EDITOR='vim'
 . "$HOME/.atuin/bin/env"
 
 # bun completions
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
+eval "$(mise activate zsh)"
 eval "$(fzf --zsh; atuin init zsh; zoxide init zsh)"
+
+# fuzzy project sessionizer (Ctrl+f)
+bindkey -s '^f' '~/dotfiles/bin/tmux-sessionizer\n'
