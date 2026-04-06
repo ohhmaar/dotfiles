@@ -25,8 +25,8 @@ HOME_FILES=(
 # Config directory dotfiles
 CONFIG_DIRS=(
     "btop"
-    "ghostty"
     "nvim"
+    "wezterm"
 )
 
 # Create symlinks for home directory files
@@ -74,6 +74,26 @@ for dir in "${CONFIG_DIRS[@]}"; do
         echo "Warning: Source directory not found: $source"
     fi
 done
+
+# Bootstrap zimfw so .zshrc can stay simple
+ZIM_HOME="${ZDOTDIR:-$HOME}/.zim"
+if [ ! -f "$ZIM_HOME/zimfw.zsh" ]; then
+    echo "Installing zimfw..."
+    mkdir -p "$ZIM_HOME"
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsSL --create-dirs -o "$ZIM_HOME/zimfw.zsh" \
+            https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+    elif command -v wget >/dev/null 2>&1; then
+        wget -nv -O "$ZIM_HOME/zimfw.zsh" \
+            https://github.com/zimfw/zimfw/releases/latest/download/zimfw.zsh
+    else
+        echo "Warning: curl/wget not found; cannot install zimfw automatically"
+    fi
+fi
+
+if [ -f "$ZIM_HOME/zimfw.zsh" ]; then
+    /bin/zsh -fc "source '$ZIM_HOME/zimfw.zsh' init" >/dev/null 2>&1 || true
+fi
 
 echo "Dotfiles installation complete!"
 echo "You may need to restart your shell or source your .zshrc/.bashrc"
