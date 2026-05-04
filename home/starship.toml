@@ -5,6 +5,8 @@ $directory$git_branch$git_status$nodejs$python$rust$golang$docker_context$cmd_du
 $character"""
 
 palette = 'gruvbox_dark'
+scan_timeout = 30
+command_timeout = 1000
 
 [palettes.gruvbox_dark]
 color_fg0 = '#fbf1c7'

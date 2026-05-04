@@ -13,9 +13,17 @@
       "rev": "5420c4b5ea0aeb99c09cfbd4fd0b70d257b44f25",
       "src": "https://github.com/stevearc/conform.nvim"
     },
+    "fff.nvim": {
+      "rev": "2465c2cad624cd43f9cedcb8bb852d95dd603788",
+      "src": "https://github.com/dmtrKovalenko/fff.nvim"
+    },
     "gitsigns.nvim": {
       "rev": "718e1eda17ebab87f686af5dcc7684b204041eef",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
+    },
+    "glance.nvim": {
+      "rev": "bf86d8b79dce808e65fdb6e9269d0b4ed6d2eefc",
+      "src": "https://github.com/DNLHC/glance.nvim"
     },
     "lualine": {
       "rev": "8811f3f3f4dc09d740c67e9ce399e7a541e2e5b2",
@@ -57,6 +65,10 @@
     "oil.nvim": {
       "rev": "756dec855b4811f2d27f067a3aca477f368d99f5",
       "src": "https://github.com/stevearc/oil.nvim"
+    },
+    "snacks.nvim": {
+      "rev": "ad9ede6a9cddf16cedbd31b8932d6dcdee9b716e",
+      "src": "https://github.com/folke/snacks.nvim"
     },
     "vim-go": {
       "rev": "dc07b9082fecd47f8ebef5f2684758e570f66377",

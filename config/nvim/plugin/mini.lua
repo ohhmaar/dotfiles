@@ -41,19 +41,21 @@ miniclue.setup({
 	},
 })
 
-require("mini.pick").setup({
+require("mini.files").setup({
 	mappings = {
-		choose_all = {
-			char = "<C-q>",
-			func = function()
-				local pick = require("mini.pick")
-				local mappings = pick.get_picker_opts().mappings
-				vim.api.nvim_input(mappings.mark_all .. mappings.choose_marked)
-			end,
-		},
+		close = "<Esc>",
+		go_in = "<CR>", -- Map both Enter and L to enter directories or open files
+		go_in_plus = "L",
+		go_out = "-",
+		go_out_plus = "H",
 	},
 })
-
+vim.keymap.set("n", "<leader>ee", "<cmd>lua MiniFiles.open()<CR>", { desc = "Toggle mini file explorer" }) -- toggle file explorer
+vim.keymap.set("n", "<leader>ef", function()
+	local files = require("mini.files")
+	files.open(vim.api.nvim_buf_get_name(0), false)
+	files.reveal_cwd()
+end, { desc = "Toggle into currently opened file" })
 require("mini.ai").setup({ n_lines = 500 })
 require("mini.move").setup()
 require("mini.pairs").setup()
